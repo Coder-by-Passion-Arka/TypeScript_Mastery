@@ -1,0 +1,1 @@
+This repository is created for the purpose of documenting my TypeScript journey from rookie to Professional Developer.
