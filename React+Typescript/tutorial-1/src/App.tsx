@@ -2,8 +2,11 @@ import "./index.css";
 import { Greet } from "./components/Greet";
 import { Person } from "./components/Person";
 import { PersonList } from "./components/PersonList";
-import {Status} from "./components/Status"
-import {List} from "./components/generics/List"
+import { Status } from "./components/Status";
+import { List } from "./components/generics/List";
+import { Counter } from "./components/class/Counter";
+import { Private } from "./components/auth/Private";
+import { Profile } from "./components/auth/Profile";
 
 export default function App() {
   const personName = {
@@ -25,10 +28,10 @@ export default function App() {
       },
     },
     {
-        name: {
+      name: {
         first: "Arka",
         last: "Das",
-      }
+      },
     },
   ];
 
@@ -47,8 +50,10 @@ export default function App() {
       <List
         // items={["Arka", "Arita", "Ahana"]}
         items={[1, 2, 3]}
-        handleOnClick={(item: string) => console.log(item)}
+        handleOnClick={(item: any) => console.log(item)}
       />
+      <Counter message="Counter" />
+      <Private isLoggedIn={true} Component={Profile}></Private>
     </div>
   );
 }
