@@ -11,6 +11,10 @@ type MedicalRecordProps = {
     - age (number)
 */
 export class Pet {
+  // Making an Unique Private 'id' variable for identifying each Pet Object 
+  private static nextId = 1;
+  private readonly _id: string;
+
   name: string = "";
   species: string = "";
   breed: string = "";
@@ -25,19 +29,45 @@ export class Pet {
   };
   photo: string = "";
 
+  // Public Getter method to get the id of a Pet Object
+  get id(): string {
+    return this._id;
+  }
+
+  // Ensure the id is included when this class is serialized to JSON
+  // toJSON() is not an Express-only thing.
+  // It is a JavaScript protocol that JSON serialization honors.
+  // You “manipulate the JSON response printing” by returning the exact shape you want from toJSON().
+  toJSON(): Record<string, any> {
+    return {
+      id: this.id,
+      name: this.name,
+      species: this.species,
+      breed: this.breed,
+      adopted: this.adopted,
+      age: this.age,
+      intakeDate: this.intakeDate,
+      adoptionDate: this.adoptionDate,
+      medicalRecord: this.medicalRecord,
+      photo: this.photo,
+    };
+  }
+
   // constructor supports either positional args (legacy) or a single object
   constructor(
-    nameOrProps: string | {
-        name: string;
-        species?: string;
-        breed?: string;
-        adopted?: boolean;
-        age?: number;
-        intakeDate?: Date | string;
-        adoptionDate?: Date | string;
-        medicalRecord?: MedicalRecordProps;
-        photo?: string;
-    }, // this object acts a order-indepedent collection of all the params. JavaScript natively doesn't support order-indepent passing of params 
+    nameOrProps:
+      | string
+      | {
+          name: string;
+          species?: string;
+          breed?: string;
+          adopted?: boolean;
+          age?: number;
+          intakeDate?: Date | string;
+          adoptionDate?: Date | string;
+          medicalRecord?: MedicalRecordProps;
+          photo?: string;
+        }, // this object acts a order-indepedent collection of all the params. JavaScript natively doesn't support order-indepent passing of params
     species?: string,
     breed?: string,
     adopted?: boolean,
@@ -47,11 +77,14 @@ export class Pet {
     medicalRecord?: MedicalRecordProps,
     photo?: string,
   ) {
+    // Set the id of this new Object 
+    this._id = `pet-${Pet.nextId++}`; // Static variable need to be referenced using the class name
+
     // Check if the params have been passed as an Object or not
     if (
-        nameOrProps !== null &&
-        typeof nameOrProps === "object" &&
-        !Array.isArray(nameOrProps)
+      nameOrProps !== null &&
+      typeof nameOrProps === "object" &&
+      !Array.isArray(nameOrProps)
     ) {
       const props = nameOrProps as any;
       this.name = props.name ?? "";
@@ -71,7 +104,7 @@ export class Pet {
         microchipId: null,
       };
       this.photo = props.photo ?? "";
-    } 
+    }
     // The params have been passed normally
     else {
       const name = nameOrProps as string;
@@ -109,4 +142,4 @@ export class Pet {
   }
 }
 
-export const pets: Pet[] = []; // A array to store the created Pet Objects 
+export const pets: Pet[] = []; // A array to store the created Pet Objects

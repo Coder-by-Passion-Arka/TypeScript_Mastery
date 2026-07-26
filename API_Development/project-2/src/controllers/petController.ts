@@ -50,9 +50,10 @@ export const getPetById = (
       return pet.id.toString() === id;
     });
 
-    if (pet instanceof Pet) res.status(200).json(pet);
+    if (pet instanceof Pet) 
+        res.status(200).json(pet);
     else
       res.status(404).json({
         error: `Pet Object with the given id: ${id} is not found`,
       });
-  },
+};
