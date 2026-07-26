@@ -10,7 +10,7 @@ type MedicalRecordProps = {
     - adopted (boolean)
     - age (number)
 */
-class Pet {
+export class Pet {
   name: string = "";
   species: string = "";
   breed: string = "";
@@ -109,4 +109,4 @@ class Pet {
   }
 }
 
-export default Pet;
+export const pets: Pet[] = []; // A array to store the created Pet Objects 
