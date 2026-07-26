@@ -1,0 +1,15 @@
+{
+  "name": "string",
+  "species": "string",
+  "breed": "string",
+  "adopted": "boolean",
+  "age": "number",
+  "intakeDate": "Date",
+  "adoptionDate": "Date",
+  "medicalRecord": {
+    "vaccinations": "string[]",
+    "weightKg": "number",
+    "microchipId": "null"
+  },
+  "photo": "string"
+}
