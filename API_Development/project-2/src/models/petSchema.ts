@@ -4,6 +4,8 @@ type MedicalRecordProps = {
   microchipId: string | null;
 };
 
+type adoptionStatus = "adopted" | "not-adopted";
+
 /* Creating a Pet Class with:
     - name (string)
     - species (string)
@@ -11,17 +13,17 @@ type MedicalRecordProps = {
     - age (number)
 */
 export class Pet {
-  // Making an Unique Private 'id' variable for identifying each Pet Object 
+  // Making an Unique Private 'id' variable for identifying each Pet Object
   private static nextId = 1;
   private readonly _id: string;
 
   name: string = "";
   species: string = "";
   breed: string = "";
-  adopted: boolean = false;
+  adopted: adoptionStatus = "not-adopted";
   age: number = 0;
   intakeDate: Date = new Date();
-  adoptionDate: Date = new Date();
+  adoptionDate: Date | adoptionStatus = new Date();
   medicalRecord: MedicalRecordProps = {
     vaccinations: [""], // Need to place an empty string so that the type of array is infered at runtime. Otherwise, system will mark the array as 'any'
     weightKg: 0,
@@ -47,7 +49,10 @@ export class Pet {
       adopted: this.adopted,
       age: this.age,
       intakeDate: this.intakeDate,
-      adoptionDate: this.adoptionDate,
+      adoptionDate:
+        this.adopted == "adopted" 
+        ? this.adoptionDate 
+        : "not-adopted",
       medicalRecord: this.medicalRecord,
       photo: this.photo,
     };
@@ -61,23 +66,23 @@ export class Pet {
           name: string;
           species?: string;
           breed?: string;
-          adopted?: boolean;
+          adopted?: adoptionStatus;
           age?: number;
           intakeDate?: Date | string;
-          adoptionDate?: Date | string;
+          adoptionDate?: Date | adoptionStatus;
           medicalRecord?: MedicalRecordProps;
           photo?: string;
         }, // this object acts a order-indepedent collection of all the params. JavaScript natively doesn't support order-indepent passing of params
     species?: string,
     breed?: string,
-    adopted?: boolean,
+    adopted?: adoptionStatus,
     age: number = 0,
     intakeDate?: Date,
-    adoptionDate?: Date,
+    adoptionDate?: Date | adoptionStatus,
     medicalRecord?: MedicalRecordProps,
     photo?: string,
   ) {
-    // Set the id of this new Object 
+    // Set the id of this new Object
     this._id = `pet-${Pet.nextId++}`; // Static variable need to be referenced using the class name
 
     // Check if the params have been passed as an Object or not
@@ -95,9 +100,12 @@ export class Pet {
       this.intakeDate = props.intakeDate
         ? new Date(props.intakeDate)
         : new Date();
-      this.adoptionDate = props.adoptionDate
-        ? new Date(props.adoptionDate)
-        : new Date();
+      this.adoptionDate =
+        this.adopted == "not-adopted"
+        ? "not-adopted" 
+        : props.adoptionDate instanceof Date
+            ? new Date(props.adoptionDate)
+            : new Date();
       this.medicalRecord = props.medicalRecord ?? {
         vaccinations: [],
         weightKg: 0,
@@ -111,10 +119,15 @@ export class Pet {
       this.name = name;
       this.species = species ?? "";
       this.breed = breed ?? "";
-      this.adopted = adopted ?? false;
+      this.adopted = adopted ?? "not-adopted";
       this.age = age;
       this.intakeDate = intakeDate ?? new Date();
-      this.adoptionDate = adoptionDate ?? new Date();
+      this.adoptionDate =
+        this.adopted == "not-adopted"
+          ? "not-adopted"
+          : this.adoptionDate instanceof Date
+            ? this.adoptionDate
+            : new Date();;
       this.medicalRecord = medicalRecord ?? {
         vaccinations: [],
         weightKg: 0,

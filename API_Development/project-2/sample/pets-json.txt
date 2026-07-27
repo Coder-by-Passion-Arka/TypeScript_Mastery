@@ -1,0 +1,55 @@
+// Single Pet Object
+{
+  "pets": [
+    {
+        "name": "Bob",
+        "species": "Dog",
+        "breed": "Dalmatian",
+        "adopted": "adopted",
+        "age": 3,
+        "intakeDate": "2022-10-09",
+        "adoptionDate": "2026-08-01",
+        "medicalRecord": {
+            "vaccinations": ["Rabies", "Fleas"],
+            "weightKg": 50,
+            "microchipId": null
+        },
+        "photo": ""
+    }
+  ]
+}
+
+// Multiple Pet Objects
+{
+    "pets": [
+        {
+            "name": "Chello",
+            "species": "Parrot",
+            "breed": "Scarlet Macaw",
+            "adopted": "not-adopted",
+            "age": 5,
+            "intakeDate": "2020-10-12",
+            "photo": "",
+            "medicalRecord": {
+                "vaccinations": ["avian polyomavirus"],
+                "weightKg": 10,
+                "microchipId": null
+            }
+        },
+        {
+            "name": "Candy",
+            "species": "Cat",
+            "breed": "British Short-hair",
+            "adopted": "adopted",
+            "age": 4,
+            "intakeDate": "2022-04-07",
+            "adoptionDate": "2026-09-28",
+            "photo": "",
+            "medicalRecord": {
+                "vaccinations": ["rabies"],
+                "weightKg": 30,
+                "microchipId": null
+            }
+        }
+    ]
+}
